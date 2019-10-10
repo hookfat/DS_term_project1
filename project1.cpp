@@ -1,9 +1,11 @@
 #include <iostream>
 #include <fstream>
 using namespace std;
-
 class Listnode{
 public:
+    Listnode* next;
+    Listnode* prev;
+    bool* data;
     Listnode(){
         next = nullptr;
         prev = nullptr;
@@ -14,25 +16,24 @@ public:
         prev = nullptr;
         data = new bool[col];
         for(int i = 0; i<col; i++)
-            data[col] = 0;
+            data[i] = 0;
     }
     ~Listnode(){
         delete[] data;
     }
-    Listnode* next;
-    Listnode* prev;
-    bool* data;
 };
 typedef struct{
     int row;
     int col;
 }block;
 
+void print_output(Listnode*,int);
+
 int main()
 {
     ifstream in;
     ofstream out;
-    in.open("1.DATA");
+    in.open("2.DATA");
     //out.open("output1.OUTPUT");
     int row, col;
     char c[5];
@@ -45,7 +46,6 @@ int main()
         temp->next->prev = temp;
         temp = temp->next;
     }
-
     in.getline(c, 1);
     while(!in.eof()){
         in.getline(c, 1003);
@@ -109,7 +109,7 @@ int main()
                 down_block[1].col = down_col+1;
                 down_block[2].row = -2;
                 down_block[2].col = down_col;
-                down_block[3].row = -2;
+                down_block[3].row = -3;
                 down_block[3].col = down_col;
                 bottom_block_num = 2;
             }
@@ -270,7 +270,7 @@ int main()
             }
         }
         else if(c[0] == 'O'){
-                down_col = c[3] - '0' -1;
+                down_col = c[2] - '0' -1;
                 down_block[0].row = -1;
                 down_block[0].col = down_col;
                 down_block[1].row = -1;
@@ -289,7 +289,7 @@ int main()
         Listnode* now_check_ptr = head->next->next->next;
         int now_check_row = -1;
         bool collision = 0;
-        while(!collision){
+        while(!collision && now_check_row < row){
             bool all_pass = 1;
             for(int i = 0; i<bottom_block_num; i++){
                 Listnode* temp = now_check_ptr;
@@ -297,7 +297,11 @@ int main()
                     for(int j = now_check_row; j!=down_block[i].row; j--)
                         temp = temp->prev;
                 }
-                if(now_check_ptr->next->data[down_block[i].col] == 1){
+                if(now_check_ptr->next == nullptr){
+                    all_pass = 0;
+                    break;
+                }
+                else if(temp->next->data[down_block[i].col] == 1){
                     all_pass = 0;
                     break;
                 }
@@ -329,12 +333,24 @@ int main()
 
         for(int i = 0; i<4; i++){
             Listnode* temp = now_check_ptr;
+            bool flag1 = 0;
+            for(int j = 0; j<i; j++){
+                if(down_block[j].row == down_block[i].row){
+                    flag1 = 1;
+                    break;
+                }
+            }
+
+            if(flag1)
+                continue;
+
+
             if(down_block[i].row != now_check_row){
                 for(int j = now_check_row; j!=down_block[i].row; j--)
                     temp = temp->prev;
             }
             bool flag = 0;
-            for(int j = 0; i<col; i++){
+            for(int j = 0; j<col; j++){
                 if(temp->data[j] != 1){
                     flag = 1;
                     break;
@@ -360,8 +376,31 @@ int main()
         }
         //delete row over
         //check lose
+        bool lose = 0;
+        for(int i = 0; i<4; i++){
+            if(down_block[i].row < 0){
+                lose = 1;
+                break;
+            }
+        }
+        if(lose)
+            break;
+        //check lose over
     }
+    //print output
 
+    print_output(head->next->next->next->next, col);
 
     return 0;
+}
+
+void print_output(Listnode* head, int num)
+{
+    Listnode* temp = head;
+    while(temp != nullptr){
+        for(int i = 0; i<num; i++)
+            cout << temp->data[i];
+        cout << endl;
+        temp = temp->next;
+    }
 }
