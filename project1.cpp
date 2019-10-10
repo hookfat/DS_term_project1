@@ -3,59 +3,54 @@
 using namespace std;
 
 class Listnode{
-    friend class Listrow;
 public:
-    Listnode():data(nullptr),col(0),next(nullptr),prev(nullptr){};
-    Listnode(int a){
-        col = a;
-        data = new bool[col];
-        for(int i = 0; i<col; i++)
-            data[i] = 0;
+    Listnode(){
         next = nullptr;
         prev = nullptr;
+        data = nullptr;
     }
-private:
+    Listnode(int col){
+        next = nullptr;
+        prev = nullptr;
+        data = new bool[col];
+        for(int i = 0; i<col; i++)
+            data[col] = 0;
+    }
+    ~Listnode(){
+        delete[] data;
+    }
+    Listnode* next;
+    Listnode* prev;
     bool* data;
-    int col;
-    Listnode* next, prev;
 };
 
-class Listrow{
-private:
-    int row, col;
-    Listnode* head;
-    Listnode* delpos[4];
-    void reset(){
-        cin >> row >> col;
-        row = row+4;  //多開四格當作讀入時的臨時額外空間
-        head = nullptr;
-        
-        
-        
-        
-        for(int i = 0; i<4; i++)
-            delpos[i] = nullptr;
-    }
-    void clean(){
-        Listnode* temp;
-        while(head != nullptr){
-            temp = head;
-            head = head->next;
-            delete temp;
-        }
-    }
-public:
-    Listrow(){
-        reset();
-    };
-    ~Listrow(){
-        clean();
-    }
-};
 
 
 int main()
 {
+    ifstream in;
+    ofstream out;
+    in.open("1.DATA");
+    //out.open("output1.OUTPUT");
+    int row, col;
+    char c[5];
+    in >> row >> col;
+    Listnode* head = Listnode(col);
+    Listnode* temp = head;
     
+    for(int i = 0; i<row+3; i++){
+        temp->next = Listnode(col);
+        temp->next->prev = temp;
+        temp = temp->next;
+    }
+    
+    in.getline(c, 1);
+    while(!in.eof()){
+        in.getline(c, 1003);
+        
+
+    }
+
+
     return 0;
 }
