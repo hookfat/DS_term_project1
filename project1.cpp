@@ -1,6 +1,7 @@
 #include <iostream>
 #include <fstream>
 using namespace std;
+int col_out;
 class Listnode{
 public:
     Listnode* next;
@@ -38,6 +39,7 @@ int main()
     int row, col;
     char c[5];
     in >> row >> col;
+    col_out = col;
     Listnode* head = new Listnode(col);
     Listnode* temp = head;
 
@@ -54,7 +56,12 @@ int main()
         int bottom_block_num;  //用來記錄有幾個block在底部
         int down_col; //紀錄輸入的方格的col
         if(c[0] == 'T'){
-            down_col = c[3] - '0' -1;
+            if(c[4] != '\0'){
+                down_col = (c[3] - '0') * 10;
+                down_col += c[4] - '0' -1;
+            }
+            else
+                down_col = c[3] - '0' -1;
             if(c[1] == '1'){
                 down_block[0].row = -2;
                 down_block[0].col = down_col;
@@ -101,7 +108,12 @@ int main()
             }
         }
         else if(c[0] == 'L'){
-            down_col = c[3] - '0' -1;
+            if(c[4] != '\0'){
+                down_col = (c[3] - '0') * 10;
+                down_col += c[4] - '0' -1;
+            }
+            else
+                down_col = c[3] - '0' -1;
             if(c[1] == '1'){
                 down_block[0].row = -1;
                 down_block[0].col = down_col;
@@ -148,7 +160,12 @@ int main()
             }
         }
         else if(c[0] == 'J'){
-            down_col = c[3] - '0' -1;
+            if(c[4] != '\0'){
+                down_col = (c[3] - '0') * 10;
+                down_col += c[4] - '0' -1;
+            }
+            else
+                down_col = c[3] - '0' -1;
             if(c[1] == '1'){
                 down_block[0].row = -1;
                 down_block[0].col = down_col;
@@ -195,7 +212,12 @@ int main()
             }
         }
         else if(c[0] == 'S'){
-            down_col = c[3] - '0' -1;
+            if(c[4] != '\0'){
+                down_col = (c[3] - '0') * 10;
+                down_col += c[4] - '0' -1;
+            }
+            else
+                down_col = c[3] - '0' -1;
             if(c[1] == '1'){
                 down_block[0].row = -2;
                 down_block[0].col = down_col+2;
@@ -220,7 +242,12 @@ int main()
             }
         }
         else if(c[0] == 'Z'){
-            down_col = c[3] - '0' -1;
+            if(c[4] != '\0'){
+                down_col = (c[3] - '0') * 10;
+                down_col += c[4] - '0' -1;
+            }
+            else
+                down_col = c[3] - '0' -1;
             if(c[1] == '1'){
                 down_block[0].row = -2;
                 down_block[0].col = down_col;
@@ -245,7 +272,12 @@ int main()
             }
         }
         else if(c[0] == 'I'){
-            down_col = c[3] - '0' -1;
+            if(c[4] != '\0'){
+                down_col = (c[3] - '0') * 10;
+                down_col += c[4] - '0' -1;
+            }
+            else
+                down_col = c[3] - '0' -1;
             if(c[1] == '1'){
                 down_block[0].row = -1;
                 down_block[0].col = down_col;
@@ -270,7 +302,12 @@ int main()
             }
         }
         else if(c[0] == 'O'){
-                down_col = c[2] - '0' -1;
+                if(c[3] != '\0'){
+                    down_col = (c[2] - '0') * 10;
+                    down_col += c[3] - '0' -1;
+                }
+                else
+                    down_col = c[2] - '0' -1;
                 down_block[0].row = -1;
                 down_block[0].col = down_col;
                 down_block[1].row = -1;
@@ -350,7 +387,7 @@ int main()
                     temp = temp->prev;
             }
             bool flag = 0;
-            for(int j = 0; j<col; j++){
+            for(int j = 0; j<col_out; j++){
                 if(temp->data[j] != 1){
                     flag = 1;
                     break;
@@ -366,7 +403,7 @@ int main()
                     del_row[i]->prev->next = del_row[i]->next;
                 if(del_row[i]->next != nullptr)
                     del_row[i]->next->prev = del_row[i]->prev;
-                for(int j = 0; j<col; j++)
+                for(int j = 0; j<col_out; j++)
                         del_row[i]->data[j] = 0;
                 head->prev = del_row[i];
                 del_row[i]->next = head;
@@ -420,7 +457,7 @@ void print_output(Listnode* head, int num)
     out.open("Tetris.output");
     Listnode* temp = head;
     while(temp != nullptr){
-        for(int i = 0; i<num; i++)
+        for(int i = 0; i<col_out; i++)
             out << temp->data[i];
         out << endl;
         temp = temp->next;
