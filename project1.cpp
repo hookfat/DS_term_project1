@@ -323,7 +323,43 @@ int main()
         }
         //block down over
         //delete row
+        Listnode* del_row[4]; //用來記錄要刪除哪些row
+        for(int i = 0; i<4; i++)
+            del_row[i] = nullptr;
 
+        for(int i = 0; i<4; i++){
+            Listnode* temp = now_check_ptr;
+            if(down_block[i].row != now_check_row){
+                for(int j = now_check_row; j!=down_block[i].row; j--)
+                    temp = temp->prev;
+            }
+            bool flag = 0;
+            for(int j = 0; i<col; i++){
+                if(temp->data[j] != 1){
+                    flag = 1;
+                    break;
+                }
+            }
+            if(!flag)
+                del_row[i] = temp;
+        }
+
+        for(int i = 0; i<4; i++){
+            if(del_row[i] != nullptr){
+                if(del_row[i]->prev != nullptr)
+                    del_row[i]->prev->next = del_row[i]->next;
+                if(del_row[i]->next != nullptr)
+                    del_row[i]->next->prev = del_row[i]->prev;
+                for(int j = 0; j<col; j++)
+                        del_row[i]->data[j] = 0;
+                head->prev = del_row[i];
+                del_row[i]->next = head;
+                del_row[i]->prev = nullptr;
+                head = del_row[i];
+            }
+        }
+        //delete row over
+        //check lose
     }
 
 
