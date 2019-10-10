@@ -32,8 +32,8 @@ void print_output(Listnode*,int);
 int main()
 {
     ifstream in;
-    ofstream out;
-    in.open("2.DATA");
+    //ofstream out;
+    in.open("Tetris.data");
     //out.open("output1.OUTPUT");
     int row, col;
     char c[5];
@@ -393,7 +393,7 @@ int main()
 
     return 0;
 }
-
+/*
 void print_output(Listnode* head, int num)
 {
     Listnode* temp = head;
@@ -403,4 +403,18 @@ void print_output(Listnode* head, int num)
         cout << endl;
         temp = temp->next;
     }
+}
+*/
+void print_output(Listnode* head, int num)
+{
+    ofstream out;
+    out.open("Tetris.output");
+    Listnode* temp = head;
+    while(temp != nullptr){
+        for(int i = 0; i<num; i++)
+            out << temp->data[i];
+        out << endl;
+        temp = temp->next;
+    }
+
 }
