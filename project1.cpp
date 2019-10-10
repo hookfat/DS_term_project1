@@ -52,8 +52,9 @@ int main()
         //READ
         block down_block[4]; //用來記錄讀入的block的 row,col
         int bottom_block_num;  //用來記錄有幾個block在底部
+        int down_col; //紀錄輸入的方格的col
         if(c[0] == 'T'){
-            int down_col = c[3] - '0' -1;
+            down_col = c[3] - '0' -1;
             if(c[1] == '1'){
                 down_block[0].row = -2;
                 down_block[0].col = down_col;
@@ -100,7 +101,7 @@ int main()
             }
         }
         else if(c[0] == 'L'){
-            int down_col = c[3] - '0' -1;
+            down_col = c[3] - '0' -1;
             if(c[1] == '1'){
                 down_block[0].row = -1;
                 down_block[0].col = down_col;
@@ -147,7 +148,7 @@ int main()
             }
         }
         else if(c[0] == 'J'){
-            int down_col = c[3] - '0' -1;
+            down_col = c[3] - '0' -1;
             if(c[1] == '1'){
                 down_block[0].row = -1;
                 down_block[0].col = down_col;
@@ -194,7 +195,7 @@ int main()
             }
         }
         else if(c[0] == 'S'){
-            int down_col = c[3] - '0' -1;
+            down_col = c[3] - '0' -1;
             if(c[1] == '1'){
                 down_block[0].row = -2;
                 down_block[0].col = down_col+2;
@@ -219,7 +220,7 @@ int main()
             }
         }
         else if(c[0] == 'Z'){
-            int down_col = c[3] - '0' -1;
+            down_col = c[3] - '0' -1;
             if(c[1] == '1'){
                 down_block[0].row = -2;
                 down_block[0].col = down_col;
@@ -244,7 +245,7 @@ int main()
             }
         }
         else if(c[0] == 'I'){
-            int down_col = c[3] - '0' -1;
+            down_col = c[3] - '0' -1;
             if(c[1] == '1'){
                 down_block[0].row = -1;
                 down_block[0].col = down_col;
@@ -269,7 +270,7 @@ int main()
             }
         }
         else if(c[0] == 'O'){
-                int down_col = c[3] - '0' -1;
+                down_col = c[3] - '0' -1;
                 down_block[0].row = -1;
                 down_block[0].col = down_col;
                 down_block[1].row = -1;
@@ -283,8 +284,45 @@ int main()
         else if(c[0] == 'E'){
             break;
         }
-        //READ
+        //READ over
+        //block down
+        Listnode* now_check_ptr = head->next->next->next;
+        int now_check_row = -1;
+        bool collision = 0;
+        while(!collision){
+            bool all_pass = 1;
+            for(int i = 0; i<bottom_block_num; i++){
+                Listnode* temp = now_check_ptr;
+                if(down_block[i].row != now_check_row){
+                    for(int j = now_check_row; j!=down_block[i].row; j--)
+                        temp = temp->prev;
+                }
+                if(now_check_ptr->next->data[down_block[i].col] == 1){
+                    all_pass = 0;
+                    break;
+                }
+            }
+            if(!all_pass){
+                collision = 1;
+            }
+            else{
+                for(int i = 0; i<4; i++)
+                    down_block[i].row++;
+                now_check_ptr = now_check_ptr->next;
+                now_check_row++;
+            }
+        }
 
+        for(int i = 0; i<4; i++){
+            Listnode* temp = now_check_ptr;
+            if(down_block[i].row != now_check_row){
+                for(int j = now_check_row; j!=down_block[i].row; j--)
+                    temp = temp->prev;
+            }
+            temp->data[down_block[i].col] = 1;
+        }
+        //block down over
+        //delete row
 
     }
 
