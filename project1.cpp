@@ -391,6 +391,15 @@ int main()
 
     print_output(head->next->next->next->next, col);
 
+    //free memory
+    Listnode* temp1 = head->next;
+    while(temp1!=nullptr){
+        temp1->prev->~Listnode();
+        delete temp1->prev;
+        temp1 = temp1->next;
+    }
+
+
     return 0;
 }
 /*
