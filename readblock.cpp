@@ -7,7 +7,7 @@ int Readblock(char*c, block* down_block)
     int bottom_block_num;  //用來記錄有幾個block在底部
     int down_col; //紀錄輸入的方格的col
     if(c[0] == 'T'){
-        if(c[4] != '\0'){
+        if(c[4] != '\0' && c[4] != ' '){
             down_col = (c[3] - '0') * 10;
             down_col += c[4] - '0' -1;
         }
@@ -59,7 +59,7 @@ int Readblock(char*c, block* down_block)
         }
     }
     else if(c[0] == 'L'){
-        if(c[4] != '\0'){
+        if(c[4] != '\0' && c[4] != ' '){
             down_col = (c[3] - '0') * 10;
             down_col += c[4] - '0' -1;
         }
@@ -111,7 +111,7 @@ int Readblock(char*c, block* down_block)
         }
     }
     else if(c[0] == 'J'){
-        if(c[4] != '\0'){
+        if(c[4] != '\0' && c[4] != ' '){
             down_col = (c[3] - '0') * 10;
             down_col += c[4] - '0' -1;
         }
@@ -163,7 +163,7 @@ int Readblock(char*c, block* down_block)
         }
     }
     else if(c[0] == 'S'){
-        if(c[4] != '\0'){
+        if(c[4] != '\0' && c[4] != ' '){
             down_col = (c[3] - '0') * 10;
             down_col += c[4] - '0' -1;
         }
@@ -193,7 +193,7 @@ int Readblock(char*c, block* down_block)
         }
     }
     else if(c[0] == 'Z'){
-        if(c[4] != '\0'){
+        if(c[4] != '\0' && c[4] != ' '){
             down_col = (c[3] - '0') * 10;
             down_col += c[4] - '0' -1;
         }
@@ -223,7 +223,7 @@ int Readblock(char*c, block* down_block)
         }
     }
     else if(c[0] == 'I'){
-        if(c[4] != '\0'){
+        if(c[4] != '\0' && c[4] != ' '){
             down_col = (c[3] - '0') * 10;
             down_col += c[4] - '0' -1;
         }
@@ -253,7 +253,7 @@ int Readblock(char*c, block* down_block)
         }
     }
     else if(c[0] == 'O'){
-            if(c[3] != '\0'){
+            if(c[3] != '\0' && c[3] != ' '){
                 down_col = (c[2] - '0') * 10;
                 down_col += c[3] - '0' -1;
             }

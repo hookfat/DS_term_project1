@@ -27,8 +27,10 @@ int main()
     while(!in.eof()){
         in.getline(c, 1003);
         //READ
-        if(c[0]=='E')
+        if(c[0] == 'E')
             break;
+        if(c[0] == '\0')
+            continue;
         block down_block[4];
         int bottom_block_num = Readblock(c, down_block);
         //READ over
