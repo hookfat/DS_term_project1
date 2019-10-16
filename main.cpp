@@ -69,7 +69,7 @@ int main()
 
     return 0;
 }
-
+/*
 void print_output(Listnode* head, int num)
 {
     Listnode* temp = head;
@@ -80,8 +80,8 @@ void print_output(Listnode* head, int num)
         temp = temp->next;
     }
 }
+*/
 
-/*
 void print_output(Listnode* head, int num)
 {
     ofstream out;
@@ -94,4 +94,4 @@ void print_output(Listnode* head, int num)
         temp = temp->next;
     }
 }
-*/
+
